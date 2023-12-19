@@ -1,0 +1,62 @@
+.ant-menu{
+    font-weight: bold;
+    text-transform: capitalize;
+}
+.ErroPage{
+    text-align: center;
+    margin-top: 80px;
+}
+.ErroPage h1{
+   font-size: 100px;
+   font-family: Arial, Helvetica, sans-serif;
+   font-weight: 600;
+   color: rgb(196, 196, 196);
+}
+.ErroPage p{
+    font-size: 120px;
+    margin-top: -100px;
+    font-weight: 400;
+    color: rgb(196, 196, 196);
+}
+.borderS{
+    border: 1px solid rgb(221, 221, 221);
+}
+
+.errSms{
+    color: red;
+    font-size: 18px;
+}
+
+.passIcon1{
+    position: absolute;
+    right: 10px;
+    bottom: 9px;
+}
+
+.spinAlign{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.shadow-card{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+.ant-card .ant-card-head {
+    padding: 20px 24px;
+    font-weight: 700;
+    font-size: 28px;
+    text-align: center;
+}
+
+.ant-layout .ant-layout-sider {
+    background-color: white;
+}
+
+.ant-layout{
+    margin-left: 5px;
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.2);
+}
+.ant-layout-sider{
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.2);
+}
