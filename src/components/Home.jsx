@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState,useEffect  } from 'react';
 import { Layout, theme } from 'antd';
 import {UserOutlined,MenuUnfoldOutlined,MenuFoldOutlined,HomeOutlined,ShoppingCartOutlined,LogoutOutlined} from '@ant-design/icons';
 import { Button, Menu } from 'antd';
 import { Outlet,useNavigate } from 'react-router-dom';
-
+import { useDispatch, useSelector} from 'react-redux';
+import { userLoginInfo } from '../slices/userSlice';
 
 function getItem(label, key, icon, children, type) {
   return {key,icon,children,label,type,};
@@ -11,6 +12,8 @@ function getItem(label, key, icon, children, type) {
 
 const { Header, Sider, Content } = Layout;
 const Home = () => {
+  let dispatch = useDispatch()
+  let data = useSelector((state)=> state.userLoginInfo.userInfo)
 
 const [collapsed, setCollapsed] = useState(false);
 const {
@@ -52,10 +55,19 @@ const items = [
   
   ]),
 
-  getItem('Logout', '/login', <LogoutOutlined />),
-
-
 ];
+
+let handleLogout = () =>{
+  dispatch(userLoginInfo(null)),
+  localStorage.removeItem("userInfo")
+  navigate("/login")
+}
+
+useEffect(()=> {
+  if(!data){
+    navigate("/login")
+  }
+},[])
 
 let navigate = useNavigate()
 let handleShow=(e)=>{
@@ -75,10 +87,11 @@ return (
         defaultSelectedKeys={['/Layout']}
         defaultOpenKeys={['item1']}
         mode="inline"
-        // theme="dark"
+        //theme="dark"
         inlineCollapsed={collapsed}
         items={items}
       />
+      
       </Sider>
 
       <Layout>
@@ -95,6 +108,9 @@ return (
             height: 64,
           }}
           />
+           <Button onClick={handleLogout} type="primary" danger>
+              logOut
+            </Button>
         </Header>
 
         <Content

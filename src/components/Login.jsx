@@ -6,17 +6,19 @@ import { EyeOutlined,EyeInvisibleOutlined } from '@ant-design/icons';
 import { Alert} from 'antd';
 import axios from 'axios';
 import {Spin } from 'antd';
+import { useDispatch } from 'react-redux';
+import { userLoginInfo } from '../slices/userSlice';
 
 const Login = () => {
-  
+    const dispatch = useDispatch();
     const navigate = useNavigate()
     const [successReg, setSuccessReg] = useState(false)
     const [error, setError] = useState("")
     const [loder, setLoder] = useState(false)
     const [passShow, setPassShow] = useState(false)
     const [fromData, setFromData] = useState({
-      email: "",
-      password: ""
+      email: "mdhmaktaruzzaman9101@gmail.com",
+      password: "123456789"
 
     })
 
@@ -26,10 +28,8 @@ const Login = () => {
         {
           email: fromData.email,
           password: fromData.password
-        }
-    
-      )
-        console.log(data)
+        })
+      dispatch(userLoginInfo(data.data))
       if(data.data.error){
         setError(data.data.error)
         setTimeout(()=>{
@@ -38,12 +38,14 @@ const Login = () => {
       }else{
         
         if(data.data.role == 'member'){
-          setError("This login only for marchent")
+          setError("This login only for admin and marchent")
         }else{
           setLoder(true)
           setSuccessReg(true)
           setTimeout(()=>{
             setSuccessReg(false)
+            
+            localStorage.setItem("userInfo", JSON.stringify(data.data))
             navigate("/")
           },4000)
           setTimeout(()=>{
@@ -72,12 +74,12 @@ const Login = () => {
 
           <Form.Item>
               <p>Email Address</p>
-              <Input name='email' onChange={handleFromdata} type='email' placeholder="Email Address" />
+              <Input name='email' onChange={handleFromdata} type='email' placeholder="Email Address" value={fromData.email} />
           </Form.Item>
 
           <Form.Item>
               <p>Password</p>
-              <Input name='password' onChange={handleFromdata} type={passShow ? "text" : "password"} placeholder="Password" />
+              <Input name='password' onChange={handleFromdata} type={passShow ? "text" : "password"} placeholder="Password" value={fromData.password} />
               {passShow ?(
                       
                       <EyeOutlined onClick={()=>setPassShow(!passShow)} className='passIcon1'></EyeOutlined>
