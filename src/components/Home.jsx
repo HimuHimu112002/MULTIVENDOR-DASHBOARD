@@ -1,6 +1,6 @@
 import { useState,useEffect  } from 'react';
 import { Layout, theme } from 'antd';
-import {UserOutlined,MenuUnfoldOutlined,MenuFoldOutlined,HomeOutlined,ShoppingCartOutlined,LogoutOutlined} from '@ant-design/icons';
+import {UserOutlined,MenuUnfoldOutlined,MenuFoldOutlined,ShoppingCartOutlined,LogoutOutlined} from '@ant-design/icons';
 import { Button, Menu } from 'antd';
 import { Outlet,useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector} from 'react-redux';
@@ -9,26 +9,35 @@ import { userLoginInfo } from '../slices/userSlice';
 function getItem(label, key, icon, children, type) {
   return {key,icon,children,label,type,};
 }
-
 const { Header, Sider, Content } = Layout;
+
 const Home = () => {
-  let dispatch = useDispatch()
+  //let dispatch = useDispatch()
   let data = useSelector((state)=> state.userLoginInfo.userInfo)
+
+  useEffect(()=> {
+    if(!data){
+      navigate("/login")
+    }
+  },[])
 
 const [collapsed, setCollapsed] = useState(false);
 const {
   token: { colorBgContainer },
 } = theme.useToken();
 
-const items = [
-  getItem('Discriptions', "/discription",<HomeOutlined />),
 
-  getItem('User', 'item1', <UserOutlined />, [
+const items = [
+  //getItem('Discriptions', "/discription",<HomeOutlined />),
+
+  data?.role == "admin" && getItem('User', 'item1', <UserOutlined />, [
     getItem('User List', '/layout'),
     getItem('Marchent', '4'),
     getItem('User', '5'),
   ]),
-
+  {
+    type: "divider"
+  },
   getItem('Product', 'item2', <ShoppingCartOutlined />, [
     getItem('Add Product', '/addproduct'),
     getItem('All Product', '/allproduct'),
@@ -36,38 +45,52 @@ const items = [
     getItem('Delete Product', '/deleteproduct'),
     getItem('All Varient', '/allvarient'),
   ]),
-
-  getItem('Product Category', 'item3', <ShoppingCartOutlined />, [
+  {
+    type: "divider"
+  },
+  getItem('Category', 'item3', <ShoppingCartOutlined />, [
     getItem('Add category', '12'),
     getItem('All category', 'sub3', null, [getItem('Samsung', '13'), getItem('Apple', '14'),getItem('Poco', '15'),getItem('Redmi', '16'),]),
 
   ]),
+  {
+    type: "divider"
+  },
 
-  getItem('Product sub Category', 'item4', <ShoppingCartOutlined />, [
+  getItem('sub Category', 'item4', <ShoppingCartOutlined />, [
     getItem('Sub category', '18'),
     getItem('All sub category', 'sub4', null, [getItem('Samsung', '19'), getItem('Apple', '20'),getItem('Poco', '21'),getItem('Redmi', '22'),]),
   
   ]),
+  {
+    type: "divider"
+  },
 
   getItem('Discount', 'item5', <ShoppingCartOutlined />, [
     getItem('Add discout', '23'),
     getItem('All discout', 'sub5', null, [getItem('discout-1', '24'), getItem('discout-2', '25'),getItem('discout-3', '26'),getItem('discout-4', '27'),]),
   
   ]),
+  {
+    type: "divider"
+  },
+  
+  data?.role == "admin" && getItem('Approve Status', 'item6', <ShoppingCartOutlined />, [
+    getItem('Marchent', '24'),
+    getItem('Category', '/categoryStatus'),
+    getItem('Sub Category', '26'),
+  
+  ]),
+  {
+    type: "divider"
+  },
+  getItem('LogOut', '/signOut', <LogoutOutlined/>),
+  {
+    type: "divider"
+  },
 
 ];
 
-let handleLogout = () =>{
-  dispatch(userLoginInfo(null)),
-  localStorage.removeItem("userInfo")
-  navigate("/login")
-}
-
-useEffect(()=> {
-  if(!data){
-    navigate("/login")
-  }
-},[])
 
 let navigate = useNavigate()
 let handleShow=(e)=>{
@@ -108,9 +131,7 @@ return (
             height: 64,
           }}
           />
-           <Button onClick={handleLogout} type="primary" danger>
-              logOut
-            </Button>
+           
         </Header>
 
         <Content

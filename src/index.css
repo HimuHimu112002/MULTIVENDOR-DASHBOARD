@@ -60,3 +60,28 @@
 .ant-layout-sider{
     box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.2);
 }
+
+.marchent_style{
+    text-align: center;
+    margin: 0 auto;
+    margin-left: 100px;
+    font-size: 60px;
+    margin-bottom: 100px;
+}
+
+.marchent_style span{
+    background-color: burlywood;
+    padding: 10px;
+    border-radius: 50px 0px 50px 0px;
+}
+
+.logOut_btn{
+    background-color: white;
+    margin: 0 auto;
+    width: 300px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}

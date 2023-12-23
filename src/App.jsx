@@ -12,6 +12,8 @@ import Login from "./components/Login.jsx";
 import ForgotPawword from "./components/ForgotPassword.jsx";
 import OtpVerification from "./components/OtpVerification.jsx";
 import ResetPasswordPage from "./components/ResetPasswordPage.jsx";
+import CategoryStatus from "./components/CategoryStatus.jsx";
+import LogOut from "./components/LogOut.jsx";
 
 
 function App() {
@@ -34,6 +36,8 @@ function App() {
           <Route path="/updateproduct" element={<UpdateProduct/>}></Route>
           <Route path="/discription" element={<Discription/>}></Route>
           <Route path="/allvarient" element={<AllVarient/>}></Route>
+          <Route path="/categoryStatus" element={<CategoryStatus/>}></Route>
+          <Route path="/signOut" element={<LogOut/>}></Route>
           <Route path="*" element={<Error/>}></Route>
         </Route>
       </Route>
